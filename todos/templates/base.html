@@ -14,6 +14,11 @@
     />
   </head>
 
+  <header>
+    
+    <link rel="shortcut icon" src="../images/task.ico" type="image/x-icon" />
+  </header>
+
   <body>
     <!-- As a link -->
     <nav
@@ -24,6 +29,7 @@
         <a class="navbar-brand" href="{% url "todo_list" %}">Lista de Tarefas</a>
       </div>
     </nav>
+
 
     <main class="container">{% block content %} {% endblock %}</main>
 
