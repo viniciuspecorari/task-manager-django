@@ -1,15 +1,50 @@
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lista de Tarefas</title>
-  </head>
-  <body>
-    <h1>Lista de Tarefas</h1>
-    <ul>
-      {% for todo in todos %}
-      <li>{{ todo.title }}</li>
+{% extends "base.html" %} 
+
+
+
+{% block page_title %} 
+Lista de Tarefas 
+{% endblock page_title %} 
+
+
+{% block content %}
+  <h1>Lista de tarefas</h1>
+
+  {% if todo_list %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Title</th>
+        <th scope="col">Created At</th>
+        <th scope="col">Deadline</th>
+        <th scope="col">Finished At</th>
+        <th scope="col">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for todo in todo_list %}
+      <tr>
+        <th scope="row">{{ todo.id }}</th>
+        <td>{{ todo.title }}</td>
+        <td>{{ todo.created_at }}</td>
+        <td>{{ todo.deadline | default:"-" }}</td>
+        <td>{{ todo.finished_at | default:"-" }}</td>
+        <td>
+          <a href="#" class="btn btn-primary btn-sm">Concluir</a>
+          <a href="{% url 'todo_update' pk=todo.id %}" class="btn btn-warning btn-sm">Editar</a>
+          <a href="{% url 'todo_delete' pk=todo.id %}" class="btn btn-danger btn-sm">Excluir</a>
+        </td>
+      </tr>
       {% endfor %}
-    </ul>
-  </body>
-</html>
+    </tbody>
+  </table>
+
+  {% else %}
+
+  <p>Nenhuma tarefa cadastrada...</p>
+
+  {% endif %}
+
+  <a href="{% url 'todo_create' %}" class="btn btn-primary">Nova Tarefa</a>
+{% endblock %}
